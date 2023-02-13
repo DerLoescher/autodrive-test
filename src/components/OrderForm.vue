@@ -4,11 +4,19 @@
       :name="'name'"
       :title="'Имя'"
       :type="'name'"
+      :placeholder="'Иван Иванов'"
       isRequired
       v-model="name"
     />
     <BasicInput :name="'phone'" :title="'Телефон'" :type="'phone'" isRequired />
-    <BasicInput :name="'email'" :title="'Email'" :type="'email'" isRequired />
+    <BasicInput
+      :name="'email'"
+      :title="'Email'"
+      :type="'email'"
+      :rules="emailValidation"
+      :placeholder="'you@example.com'"
+      isRequired
+    />
     <BasicSelect
       :name="'city'"
       :title="'Город'"
@@ -16,7 +24,12 @@
       isRequired
       v-model="orderForm.city_id"
     />
-    <BasicButton class="OrderForm-submit" />
+    <BasicButton
+      class="OrderForm-submit"
+      :color="'#16A34A'"
+      :title="'Отправить'"
+      @click="submitForm"
+    />
   </div>
 </template>
 
@@ -40,6 +53,18 @@ export default {
       orderForm: { ...this.form },
       cities: citiesList,
     };
+  },
+  methods: {
+    emailValidation(email) {
+      if (/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        return;
+      } else {
+        return false;
+      }
+    },
+    submitForm() {
+      return false;
+    },
   },
 };
 </script>

@@ -49,10 +49,7 @@ export default {
   opacity: 0.8;
 }
 .BasicButton:active > .BasicButton-title {
-  transform: scale(1.2);
-}
-.BasicButton:focus {
-  border: solid 0.5px;
+  filter: brightness(0.8);
 }
 .BasicButton-title {
   color: white;

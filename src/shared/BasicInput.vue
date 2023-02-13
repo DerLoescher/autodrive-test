@@ -9,6 +9,7 @@
       :name="name"
       @input="onInput($event.target.value)"
       :value="modelValue"
+      :placeholder="placeholder"
     />
   </div>
 </template>
@@ -36,6 +37,10 @@ export default {
     rules: {
       type: Function,
       default: (item) => item,
+    },
+    placeholder: {
+      type: String,
+      default: "",
     },
     isRequired: {
       type: Boolean,

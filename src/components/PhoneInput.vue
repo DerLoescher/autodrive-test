@@ -1,24 +1,23 @@
 <template>
-  <div class="BasicSelect">
-    <label class="BasicSelect-label" :for="name"
+  <div class="PhoneInput">
+    <label class="PhoneInput-label" :for="name" v-if="title"
       >{{ title }}<sup v-if="isRequired">*</sup></label
     >
-    <select
-      class="BasicSelect-area"
+    <input
+      class="PhoneInput-area"
+      type="tel"
       :name="name"
-      @change="onSelect($event.target.value)"
       :value="modelValue"
-    >
-      <option v-for="option in options" :key="option.id" :value="option.id">
-        {{ option.name }}
-      </option>
-    </select>
+      :placeholder="placeholder"
+      v-phone
+      @change="onInput($event.target.value)"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  name: "BasicSelect",
+  name: "PhoneInput",
   props: {
     modelValue: {
       type: [String, Number],
@@ -32,13 +31,17 @@ export default {
       type: String,
       default: null,
     },
-    options: {
-      type: Array,
-      required: true,
+    type: {
+      type: String,
+      default: "text",
     },
-    defaultValue: {
-      type: Number,
-      default: null,
+    rules: {
+      type: Function,
+      default: (item) => item,
+    },
+    placeholder: {
+      type: String,
+      default: "",
     },
     isRequired: {
       type: Boolean,
@@ -46,8 +49,9 @@ export default {
     },
   },
   methods: {
-    onSelect(value) {
+    onInput(value) {
       if (value !== this.modelValue) {
+        this.rules(value);
         this.$emit("update:modelValue", value);
       }
     },
@@ -57,19 +61,19 @@ export default {
 </script>
 
 <style scoped>
-.BasicSelect {
+.PhoneInput {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-.BasicSelect-label {
+.PhoneInput-label {
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
   color: #374151;
 }
-.BasicSelect-area {
-  padding: 0px 13px;
+.PhoneInput-area {
+  padding: 9px 13px;
   height: 38px;
   background: #ffffff;
   border: 1px solid #d1d5db;

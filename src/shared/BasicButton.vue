@@ -44,6 +44,7 @@ export default {
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
+  height: 38px;
 }
 .BasicButton:hover {
   opacity: 0.8;

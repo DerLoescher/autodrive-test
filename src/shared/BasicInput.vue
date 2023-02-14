@@ -7,9 +7,9 @@
       class="BasicInput-area"
       :type="type"
       :name="name"
-      @input="onInput($event.target.value)"
       :value="modelValue"
       :placeholder="placeholder"
+      @change="onInput($event.target.value)"
     />
   </div>
 </template>
@@ -73,7 +73,6 @@ export default {
 }
 .BasicInput-area {
   padding: 9px 13px;
-  width: 170px;
   height: 38px;
   background: #ffffff;
   border: 1px solid #d1d5db;

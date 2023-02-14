@@ -16,7 +16,15 @@
   <BasicModal @closeModal="onCloseModal" v-if="modalIsOpen">
     <template #header>Заказать звонок</template>
     <template #content>
-      <OrderForm :form="orderForm" />
+      <OrderForm :form="orderForm" @orderSubmitted="onOrderSubmit" />
+    </template>
+  </BasicModal>
+  <BasicModal v-if="resultHtml" @closeModal="resetResult">
+    <template #header>{{
+      this.resultStatus ? "Заказ создан" : "Ошибка"
+    }}</template>
+    <template #content>
+      <div v-html="resultHtml"></div>
     </template>
   </BasicModal>
 </template>
@@ -26,6 +34,7 @@ import OrderForm from "../components/OrderForm.vue";
 import BasicModal from "../shared/BasicModal.vue";
 import BasicButton from "../shared/BasicButton.vue";
 import PageWrapper from "../shared/PageWrapper.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MainPage",
@@ -51,8 +60,11 @@ export default {
         email: null,
         city_id: null,
       },
+      resultHtml: null,
+      resultStatus: null,
     };
   },
+  computed: { ...mapGetters(["ORDER_RESULT"]) },
   methods: {
     onCloseModal() {
       this.modalIsOpen = false;
@@ -63,6 +75,14 @@ export default {
     orderInCity(cityId) {
       this.orderForm.city_id = cityId;
       this.onOpenModal();
+    },
+    onOrderSubmit(result) {
+      this.onCloseModal();
+      this.resultStatus = result;
+      this.resultHtml = this.ORDER_RESULT;
+    },
+    resetResult() {
+      this.resultHtml = null;
     },
   },
 };

@@ -7,9 +7,11 @@ export default {
     await axios
       .post(url, form)
       .then((Response) => {
-        data = Response.data;
+        data = Response;
       })
-      .catch((e) => (data = e.message));
+      .catch((e) => {
+        data = e.response;
+      });
     return data;
   },
 };

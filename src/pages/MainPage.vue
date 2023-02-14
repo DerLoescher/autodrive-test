@@ -94,4 +94,9 @@ export default {
   flex-wrap: nowrap;
   gap: 20px;
 }
+@media screen and (max-width: 600px) {
+  .MainPage {
+    flex-direction: column;
+  }
+}
 </style>
